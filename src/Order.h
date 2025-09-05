@@ -1,3 +1,4 @@
+#pragma once
 #include <cstdint>
 
 using Price = uint64_t;

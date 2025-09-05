@@ -20,9 +20,7 @@ void OrderBookEngine::addOrder(Order order) {
         return;
     };
     if (order.side == Side::BUY) {
-        if (OrderBookEngine::asks.empty()) {
-            return;
-        }
+        if (!OrderBookEngine::asks.empty()) {
         while (order.quantity_remaining > 0) {
             auto it = OrderBookEngine::asks.begin();
             Price ask_price = it->first;
@@ -39,14 +37,13 @@ void OrderBookEngine::addOrder(Order order) {
                 continue;
             };
         }
+        }
         if (order.quantity_remaining > 0 && order.order_type == OrderType::LIMIT) {
             OrderBookEngine::bids[order.price].add_order(order);
         }
     }
     else {
-        if (OrderBookEngine::bids.empty()) {
-            return;
-        }
+        if (!OrderBookEngine::bids.empty()) {
         while (order.quantity_remaining > 0) {
             auto it = OrderBookEngine::bids.begin();
             Price bid_price = it->first;
@@ -63,7 +60,7 @@ void OrderBookEngine::addOrder(Order order) {
                 continue;
             }
         }
-        
+        }
         if (order.quantity_remaining > 0 && order.order_type == OrderType::LIMIT) {
             OrderBookEngine::asks[order.price].add_order(order);
         }

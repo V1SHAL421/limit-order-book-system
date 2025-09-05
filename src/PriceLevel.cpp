@@ -17,11 +17,16 @@ Quantity PriceLevel::remove_first(Quantity order_quantity) {
     }
     else {
         orders.front().quantity_remaining -= order_quantity;
+        total_quantity_ -= order_quantity;
         return order_quantity;
     }
 };
 
 bool PriceLevel::is_empty() {
     return orders.empty();
+}
+
+Quantity PriceLevel::total_quantity() const {
+    return total_quantity_;
 }
 
