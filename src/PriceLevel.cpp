@@ -5,19 +5,23 @@ void PriceLevel::add_order(const Order& o) {
     total_quantity_ += o.quantity_remaining;
 }
 
-void PriceLevel::remove_first(Quantity order_quantity) {
+Quantity PriceLevel::remove_first(Quantity order_quantity) {
     if (orders.empty()) {
+        return 0;
     }
     else if (order_quantity >= orders.front().quantity_remaining) {
-        total_quantity_ -= orders.front().quantity_remaining;
+        Quantity best_price_quantity = orders.front().quantity_remaining;
+        total_quantity_ -= best_price_quantity;
         orders.pop_front();
+        return best_price_quantity;
     }
     else {
         orders.front().quantity_remaining -= order_quantity;
+        return order_quantity;
     }
-    return;
 };
 
 bool PriceLevel::is_empty() {
     return orders.empty();
 }
+

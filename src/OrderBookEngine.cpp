@@ -11,23 +11,57 @@ bool OrderBookEngine::isMarketOrder(Order order) {
     return order.order_type == OrderType::MARKET;
 }
 
-// void OrderBookEngine::addLimitOrder(Order order) {
-//     if (order.quantity_remaining <= 0) {
-//         return;
-//     };
-//     if (order.side == Side::BUY) {
-//         while (order.quantity_remaining > 0) {
-//             auto it = OrderBookEngine::asks.begin();
-//             Price ask_price = it->first;
-//             PriceLevel& ask_level = it->second;
-//             if (ask_price > order.price) {
-//                 break;
-//             };
-//             if (ask_level.total_quantity() == 0) {
-//                 OrderBookEngine::asks.erase(it);
-//                 continue;
-//             };
+void OrderBookEngine::addOrder(Order order) {
+    if (order.quantity_remaining <= 0) {
+        return;
+    };
+    if (order.side == Side::BUY) {
+        if (OrderBookEngine::asks.empty()) {
+            return;
+        }
+        while (order.quantity_remaining > 0) {
+            auto it = OrderBookEngine::asks.begin();
+            Price ask_price = it->first;
+            PriceLevel& ask_level = it->second;
+            if (order.order_type == OrderType::LIMIT && ask_price > order.price) {
+                break;
+            };
 
-//             }
-//         };
-//     };
+            Quantity order_quantity_satisfied = ask_level.remove_first(order.quantity_remaining);
+            order.quantity_remaining -= order_quantity_satisfied;
+
+            if (ask_level.total_quantity() == 0) {
+                OrderBookEngine::asks.erase(it);
+                continue;
+            };
+        }
+        if (order.quantity_remaining > 0 && order.order_type == OrderType::LIMIT) {
+            OrderBookEngine::bids[order.price].add_order(order);
+        }
+    }
+    else {
+        if (OrderBookEngine::bids.empty()) {
+            return;
+        }
+        while (order.quantity_remaining > 0) {
+            auto it = OrderBookEngine::bids.begin();
+            Price bid_price = it->first;
+            PriceLevel& bid_level = it->second;
+            if (order.order_type == OrderType::LIMIT && bid_price < order.price) {
+                break;
+            }
+
+            Quantity order_quantity_satisfied = bid_level.remove_first(order.quantity_remaining);
+            order.quantity_remaining -= order_quantity_satisfied;
+
+            if (bid_level.total_quantity() == 0) {
+                OrderBookEngine::bids.erase(it);
+                continue;
+            }
+        }
+        
+        if (order.quantity_remaining > 0 && order.order_type == OrderType::LIMIT) {
+            OrderBookEngine::asks[order.price].add_order(order);
+        }
+    }
+}
