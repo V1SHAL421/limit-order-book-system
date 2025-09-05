@@ -22,6 +22,11 @@ add_library(orderbook ${SOURCES})
 add_executable(tests
     tests/test_orderbook_engine.cpp
     tests/test_price_level.cpp
+    tests/test_spsc_ring.cpp
+    tests/test_wire.cpp
+    tests/test_feeder.cpp
+    tests/test_engine_runner.cpp
+    tests/test_integration.cpp
 )
 
 target_link_libraries(tests orderbook GTest::gtest GTest::gtest_main)

@@ -7,7 +7,7 @@ TESTDIR = tests
 BUILDDIR = build
 
 SOURCES = $(SRCDIR)/OrderBookEngine.cpp $(SRCDIR)/PriceLevel.cpp
-TEST_SOURCES = $(TESTDIR)/test_orderbook_engine.cpp $(TESTDIR)/test_price_level.cpp
+TEST_SOURCES = $(TESTDIR)/test_orderbook_engine.cpp $(TESTDIR)/test_price_level.cpp $(TESTDIR)/test_spsc_ring.cpp $(TESTDIR)/test_wire.cpp $(TESTDIR)/test_feeder.cpp
 
 all: test
 
