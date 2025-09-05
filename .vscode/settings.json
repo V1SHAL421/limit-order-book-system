@@ -64,6 +64,7 @@
     "string": "cpp",
     "string_view": "cpp",
     "vector": "cpp",
-    "map": "cpp"
+    "map": "cpp",
+    "optional": "cpp"
   }
 }

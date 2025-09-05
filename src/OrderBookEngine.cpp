@@ -1,7 +1,11 @@
 #include <cstdint>
 #include <map>
 #include <deque>
+#include <optional>
 #include "OrderBookEngine.h"
+
+using std::optional;
+using std::nullopt;
 
 bool OrderBookEngine::isLimitOrder(Order order) {
     return order.order_type == OrderType::LIMIT;
@@ -64,4 +68,18 @@ void OrderBookEngine::addOrder(Order order) {
             OrderBookEngine::asks[order.price].add_order(order);
         }
     }
+}
+
+optional<Price> OrderBookEngine::bestBid() {
+    if (OrderBookEngine::bids.empty()) {
+        return nullopt;
+    }
+    return OrderBookEngine::bids.begin()->first;
+}
+
+optional<Price> OrderBookEngine::bestAsk() {
+    if (OrderBookEngine::asks.empty()) {
+        return nullopt;
+    }
+    return OrderBookEngine::asks.begin()->first;
 }
