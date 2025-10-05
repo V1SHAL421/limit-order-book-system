@@ -51,7 +51,7 @@ public:
             cmd.px,
             cmd.qty,
             now_ns(),
-            cmd.side == Side::Buy ? Side::BUY : Side::SELL,
+            cmd.side == Side::Buy ? Side::Buy : Side::Sell,
             cmd.type == OrdType::Limit ? OrderType::LIMIT : OrderType::MARKET
           };
           engine_.addOrder(o);

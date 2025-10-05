@@ -19,7 +19,7 @@ void OrderBookEngine::addOrder(Order order) {
     if (order.quantity_remaining <= 0) {
         return;
     };
-    if (order.side == Side::BUY) {
+    if (order.side == Side::Buy) {
         if (!OrderBookEngine::asks.empty()) {
         while (order.quantity_remaining > 0) {
             auto it = OrderBookEngine::asks.begin();

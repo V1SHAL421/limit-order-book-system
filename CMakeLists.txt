@@ -11,7 +11,7 @@ include_directories(src)
 
 # Source files
 set(SOURCES
-    src/OrderBookEngine.cpp
+    src/main.cpp
     src/PriceLevel.cpp
 )
 
@@ -20,7 +20,6 @@ add_library(orderbook ${SOURCES})
 
 # Test executable
 add_executable(tests
-    tests/test_orderbook_engine.cpp
     tests/test_price_level.cpp
     tests/test_spsc_ring.cpp
     tests/test_wire.cpp

@@ -11,18 +11,18 @@ protected:
 };
 
 TEST_F(OrderBookEngineTest, IsLimitOrder) {
-    Order limit_order{100, 50, 1, Side::BUY, OrderType::LIMIT};
+    Order limit_order{100, 50, 1, Side::Buy, OrderType::LIMIT};
     EXPECT_TRUE(engine.isLimitOrder(limit_order));
     
-    Order market_order{0, 50, 2, Side::BUY, OrderType::MARKET};
+    Order market_order{0, 50, 2, Side::Buy, OrderType::MARKET};
     EXPECT_FALSE(engine.isLimitOrder(market_order));
 }
 
 TEST_F(OrderBookEngineTest, IsMarketOrder) {
-    Order market_order{0, 50, 1, Side::BUY, OrderType::MARKET};
+    Order market_order{0, 50, 1, Side::Buy, OrderType::MARKET};
     EXPECT_TRUE(engine.isMarketOrder(market_order));
     
-    Order limit_order{100, 50, 2, Side::BUY, OrderType::LIMIT};
+    Order limit_order{100, 50, 2, Side::Buy, OrderType::LIMIT};
     EXPECT_FALSE(engine.isMarketOrder(limit_order));
 }
 
@@ -32,7 +32,7 @@ TEST_F(OrderBookEngineTest, BestBidAskEmpty) {
 }
 
 TEST_F(OrderBookEngineTest, AddLimitBuyOrder) {
-    Order buy_order{100, 50, 1, Side::BUY, OrderType::LIMIT};
+    Order buy_order{100, 50, 1, Side::Buy, OrderType::LIMIT};
     engine.addOrder(buy_order);
     
     EXPECT_TRUE(engine.bestBid().has_value());
@@ -40,7 +40,7 @@ TEST_F(OrderBookEngineTest, AddLimitBuyOrder) {
 }
 
 TEST_F(OrderBookEngineTest, AddLimitSellOrder) {
-    Order sell_order{110, 50, 1, Side::SELL, OrderType::LIMIT};
+    Order sell_order{110, 50, 1, Side::Sell, OrderType::LIMIT};
     engine.addOrder(sell_order);
     
     EXPECT_TRUE(engine.bestAsk().has_value());
@@ -49,12 +49,12 @@ TEST_F(OrderBookEngineTest, AddLimitSellOrder) {
 
 TEST_F(OrderBookEngineTest, MatchingOrders) {
     // Add sell order first
-    Order sell_order{100, 30, 1, Side::SELL, OrderType::LIMIT};
+    Order sell_order{100, 30, 1, Side::Sell, OrderType::LIMIT};
     engine.addOrder(sell_order);
     EXPECT_TRUE(engine.bestAsk().has_value());
     
     // Add buy order that should match
-    Order buy_order{100, 20, 2, Side::BUY, OrderType::LIMIT};
+    Order buy_order{100, 20, 2, Side::Buy, OrderType::LIMIT};
     engine.addOrder(buy_order);
     
     // Ask should still exist with remaining quantity

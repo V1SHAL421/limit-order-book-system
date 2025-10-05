@@ -16,7 +16,7 @@ TEST_F(PriceLevelTest, EmptyPriceLevel) {
 }
 
 TEST_F(PriceLevelTest, AddSingleOrder) {
-    Order order{100, 50, 1, Side::BUY, OrderType::LIMIT};
+    Order order{100, 50, 1, Side::Buy, OrderType::LIMIT};
     price_level.add_order(order);
     
     EXPECT_FALSE(price_level.is_empty());
@@ -24,8 +24,8 @@ TEST_F(PriceLevelTest, AddSingleOrder) {
 }
 
 TEST_F(PriceLevelTest, AddMultipleOrders) {
-    Order order1{100, 30, 1, Side::BUY, OrderType::LIMIT};
-    Order order2{100, 20, 2, Side::BUY, OrderType::LIMIT};
+    Order order1{100, 30, 1, Side::Buy, OrderType::LIMIT};
+    Order order2{100, 20, 2, Side::Buy, OrderType::LIMIT};
     
     price_level.add_order(order1);
     price_level.add_order(order2);
@@ -35,7 +35,7 @@ TEST_F(PriceLevelTest, AddMultipleOrders) {
 }
 
 TEST_F(PriceLevelTest, RemoveFirstFullOrder) {
-    Order order{100, 30, 1, Side::BUY, OrderType::LIMIT};
+    Order order{100, 30, 1, Side::Buy, OrderType::LIMIT};
     price_level.add_order(order);
     
     Quantity removed = price_level.remove_first(30);
@@ -46,7 +46,7 @@ TEST_F(PriceLevelTest, RemoveFirstFullOrder) {
 }
 
 TEST_F(PriceLevelTest, RemoveFirstPartialOrder) {
-    Order order{100, 50, 1, Side::BUY, OrderType::LIMIT};
+    Order order{100, 50, 1, Side::Buy, OrderType::LIMIT};
     price_level.add_order(order);
     
     Quantity removed = price_level.remove_first(20);
@@ -57,7 +57,7 @@ TEST_F(PriceLevelTest, RemoveFirstPartialOrder) {
 }
 
 TEST_F(PriceLevelTest, RemoveFirstMoreThanAvailable) {
-    Order order{100, 30, 1, Side::BUY, OrderType::LIMIT};
+    Order order{100, 30, 1, Side::Buy, OrderType::LIMIT};
     price_level.add_order(order);
     
     Quantity removed = price_level.remove_first(50);
@@ -76,8 +76,8 @@ TEST_F(PriceLevelTest, RemoveFromEmptyLevel) {
 }
 
 TEST_F(PriceLevelTest, FIFOOrdering) {
-    Order order1{100, 20, 1, Side::BUY, OrderType::LIMIT};
-    Order order2{100, 30, 2, Side::BUY, OrderType::LIMIT};
+    Order order1{100, 20, 1, Side::Buy, OrderType::LIMIT};
+    Order order2{100, 30, 2, Side::Buy, OrderType::LIMIT};
     
     price_level.add_order(order1);
     price_level.add_order(order2);

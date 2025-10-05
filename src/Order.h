@@ -1,14 +1,10 @@
 #pragma once
 #include <cstdint>
+#include <Wire.h>
 
 using Price = uint64_t;
 using Quantity = int64_t;
 using Timestamp = uint64_t;
-
-enum class Side {
-    BUY,
-    SELL
-};
 
 enum class OrderType {
     LIMIT,
