@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Isrc -I/opt/anaconda3/include
+CXXFLAGS = -std=c++20 -Wall -Isrc -I/opt/anaconda3/include
 LDFLAGS = -L/opt/anaconda3/lib -Wl,-rpath,/opt/anaconda3/lib -lgtest -lgtest_main -pthread
 
 SRCDIR = src
